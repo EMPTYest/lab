@@ -1,0 +1,223 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    max-width: 960px;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #0779e4 3px solid;
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header ul {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+header li {
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+header #branding {
+    float: left;
+}
+
+header #branding h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header nav {
+    float: right;
+    margin-top: 10px;
+}
+
+header .highlight, header .current a {
+    color: #0779e4;
+    font-weight: bold;
+}
+
+header a:hover {
+    color: #ccc;
+    font-weight: bold;
+}
+
+/* Main  */
+main {
+    padding: 20px;
+    background: #fff;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1.page-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; 
+}
+
+button, .button {
+    display: inline-block;
+    background: #0779e4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+button:hover, .button:hover {
+    background: #0056b3;
+}
+
+/* Table (for Profile) */
+table.profile-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table.profile-table th, table.profile-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table.profile-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+table.profile-table td:first-child {
+    font-weight: bold;
+    width: 30%;
+}
+
+/* App Logo  */
+.app-logo {
+    display: block; /* To allow margin auto to work for centering */
+    width: 150px;   /* Adjust width as needed */
+    height: auto;   /* Maintain aspect ratio */
+    margin: 20px auto 20px auto; /* Center it and add vertical margin */
+    border: 1px solid #ddd; /* Optional: if you want a light border */
+    padding: 5px; /* Optional: padding around the logo inside the border */
+    background-color: #fff; /* Optional: background if logo has transparency */
+    box-shadow: 0 0 5px rgba(0,0,0,0.1); /* Optional: subtle shadow */
+}
+
+
+/* App Page */
+.app-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.app-section h2 {
+    margin-top: 0;
+    color: #0779e4;
+}
+
+.word-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.word-display .foreign-word {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.word-display .translation {
+    font-size: 1.8em;
+    color: #555;
+}
+
+.app-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.app-controls .button {
+    margin: 0 10px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 60%; /* Example progress */
+    height: 20px;
+    background-color: #4caf50;
+    text-align: center;
+    line-height: 20px;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    margin-top: 30px;
+    color: #fff;
+    background-color: #333;
+    text-align: center;
+}

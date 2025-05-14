@@ -1,0 +1,79 @@
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вивчення слів - Language Learner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Language</span> Learner</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Про додаток</a></li>
+                    <li class="current"><a href="app.html">Додаток</a></li>
+                    <li><a href="profile.html">Профіль</a></li>
+                    <li><a href="login.html">Вхід</a> <!-- Or Logout --></li>
+                    <li><a href="register.html">Реєстрація</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Вивчення іноземних слів</h1>
+
+        <!-- Режим Вивчення -->
+        <section class="app-section">
+            <h2>Режим вивчення</h2>
+            <div class="word-display">
+                <p class="foreign-word">[Apple]</p>
+                <p class="translation">[Яблуко]</p>
+            </div>
+            <!-- Image placeholder for word removed -->
+            <div class="app-controls">
+                <button type="button">Показати переклад</button>
+                <button type="button">Знаю</button>
+                <button type="button">Не знаю / Наступне</button>
+            </div>
+            <div style="margin-top: 15px; text-align: center;">
+                <p>Поточний набір: <strong>Фрукти</strong> | Слово <strong>5</strong> з <strong>20</strong></p>
+            </div>
+        </section>
+
+        <!-- Режим Контролю Знань -->
+        <section class="app-section">
+            <h2>Режим контролю знань</h2>
+            <p>Прогрес тесту:</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 30%;">30%</div>
+            </div>
+
+            <div class="word-display">
+                <p class="foreign-word">Перекладіть: <strong>[Banana]</strong></p>
+            </div>
+            
+            <div class="form-group">
+                <label for="user-translation">Ваш переклад:</label>
+                <input type="text" id="user-translation" name="user-translation" placeholder="Введіть переклад">
+            </div>
+            <!-- Image placeholder for hint removed -->
+            <div class="app-controls">
+                <button type="button">Перевірити</button>
+                <button type="button">Пропустити</button>
+            </div>
+            <div id="feedback-area" style="margin-top: 15px; text-align: center; font-weight: bold;">
+                <p>Результат: [Очікування відповіді...]</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Language Learner © 2023</p>
+    </footer>
+</body>
+</html>

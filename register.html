@@ -1,0 +1,65 @@
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація - Language Learner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Language</span> Learner</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Про додаток</a></li>
+                    <li><a href="app.html">Додаток</a></li>
+                    <li><a href="profile.html">Профіль</a></li>
+                    <li><a href="login.html">Вхід</a></li>
+                    <li class="current"><a href="register.html">Реєстрація</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Реєстрація користувача</h1>
+        <form action="#" method="POST"> <!-- Action will be handled by backend later -->
+            <div class="form-group">
+                <label for="name">Ім’я:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Стать:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Чоловіча</option>
+                    <option value="female">Жіноча</option>
+                    <option value="other">Інша</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dob">Дата народження:</label>
+                <input type="date" id="dob" name="dob">
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Підтвердіть пароль:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit">Зареєструватися</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>Language Learner © 2023</p>
+    </footer>
+</body>
+</html>
