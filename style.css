@@ -1,4 +1,7 @@
 /* General Styles */
+html {
+    height: 100%; 
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
@@ -6,7 +9,9 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
-}
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
 
 .container {
     width: 80%;
@@ -68,11 +73,12 @@ header a:hover {
 
 /* Main  */
 main {
-    padding: 20px;
+     padding: 20px;
     background: #fff;
-    margin-top: 20px;
+    margin-top: 20px; 
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    flex-grow: 1;
 }
 
 h1.page-title {
@@ -216,7 +222,7 @@ table.profile-table td:first-child {
 /* Footer */
 footer {
     padding: 20px;
-    margin-top: 30px;
+    margin-top: auto;
     color: #fff;
     background-color: #333;
     text-align: center;
