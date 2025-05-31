@@ -1,31 +1,56 @@
 export class AppView {
     constructor() {
+        console.log("AppView: Constructor called.");
         this.appPage = document.getElementById('page-app');
         if (!this.appPage) {
             console.error("AppView: #page-app element not found!");
             return;
         }
+        console.log("AppView: #page-app element FOUND.");
 
-        // Елементи для режиму вивчення
-        this.learnSection = this.appPage.querySelector('.app-section:nth-child(1)');
-        if (this.learnSection) {
-            this.learnForeignWordEl = this.learnSection.querySelector('.foreign-word');
-            this.learnTranslationEl = this.learnSection.querySelector('.translation');
-            this.showTranslationBtn = this.learnSection.querySelector('button:nth-of-type(1)');
-            this.knowBtn = this.learnSection.querySelector('button:nth-of-type(2)');
-            this.dontKnowBtn = this.learnSection.querySelector('button:nth-of-type(3)');
-            this.learnStatsEl = this.learnSection.querySelector('div[style*="text-align: center"] p');
+        // Знаходимо всі секції з класом .app-section
+        const allAppSections = this.appPage.querySelectorAll('.app-section');
+        console.log("AppView: Found allAppSections count:", allAppSections.length); // ЛОГ: Скільки секцій знайдено
+
+        if (allAppSections.length >= 1) {
+            this.learnSection = allAppSections[0]; // Перша секція для вивчення
+            console.log("AppView: learnSection (allAppSections[0]):", this.learnSection); // ЛОГ
+            if (this.learnSection) {
+                this.learnForeignWordEl = this.learnSection.querySelector('.foreign-word');
+                this.learnTranslationEl = this.learnSection.querySelector('.translation');
+                this.showTranslationBtn = this.learnSection.querySelector('button:nth-of-type(1)');
+                this.knowBtn = this.learnSection.querySelector('button:nth-of-type(2)');
+                this.dontKnowBtn = this.learnSection.querySelector('button:nth-of-type(3)');
+                this.learnStatsEl = this.learnSection.querySelector('div[style*="text-align: center"] p');
+                console.log("AppView: learnSection buttons - show:", this.showTranslationBtn, "know:", this.knowBtn, "dontKnow:", this.dontKnowBtn);
+            } else {
+                console.error("AppView: learnSection (allAppSections[0]) is unexpectedly null or undefined even if allAppSections.length >= 1");
+            }
+        } else {
+            this.learnSection = null; // Явно встановлюємо в null, якщо не знайдено
+            console.error("AppView: No .app-section found for learnSection.");
         }
 
-        // Елементи для режиму контролю
-        this.testSection = this.appPage.querySelector('.app-section:nth-child(2)');
-        if (this.testSection) {
-            this.testForeignWordDisplayP = this.testSection.querySelector('p.foreign-word'); // Весь параграф
-            this.testUserInputEl = this.testSection.querySelector('#user-translation');
-            this.checkBtn = this.testSection.querySelector('button:nth-of-type(1)');
-            this.skipBtn = this.testSection.querySelector('button:nth-of-type(2)');
-            this.feedbackAreaEl = this.testSection.querySelector('#feedback-area p');
-            this.progressBarEl = this.testSection.querySelector('.progress-bar');
+
+        if (allAppSections.length >= 2) {
+            this.testSection = allAppSections[1]; // Друга секція для тестування
+            console.log("AppView: testSection (allAppSections[1]):", this.testSection); // ЛОГ
+            if (this.testSection) {
+                this.testForeignWordDisplayP = this.testSection.querySelector('p.foreign-word');
+                this.testForeignWordStrongEl = this.testSection.querySelector('.foreign-word strong'); // Додано для перевірки
+                this.testUserInputEl = this.testSection.querySelector('#user-translation');
+                this.checkBtn = this.testSection.querySelector('button:nth-of-type(1)');
+                this.skipBtn = this.testSection.querySelector('button:nth-of-type(2)');
+                this.feedbackAreaEl = this.testSection.querySelector('#feedback-area p');
+                this.progressBarEl = this.testSection.querySelector('.progress-bar');
+                console.log("AppView: testSection buttons - check:", this.checkBtn, "skip:", this.skipBtn);
+                console.log("AppView: testForeignWordStrongEl:", this.testForeignWordStrongEl);
+            } else {
+                console.error("AppView: testSection (allAppSections[1]) is unexpectedly null or undefined even if allAppSections.length >= 2");
+            }
+        } else {
+            this.testSection = null; // Явно встановлюємо в null, якщо не знайдено
+            console.error("AppView: Less than 2 .app-section found, testSection will be null.");
         }
     }
 
