@@ -1,20 +1,31 @@
 import { UserModel } from './models/userModel.js';
-// import { WordModel } from './models/wordModel.js'; // Розкоментуємо, коли буде готовий
+import { WordModel } from './models/wordModel.js'; // РОЗКОМЕНТУЄМО ПІЗНІШЕ
 import { NavView } from './views/navView.js';
 import { AuthView } from './views/authView.js';
 import { AuthController } from './controllers/authController.js';
-// import { ProfileView } from './views/profileView.js';
-// import { ProfileController } from './controllers/profileController.js';
-// import { AppView } from './views/appView.js';
-// import { AppController } from './controllers/appController.js';
+import { ProfileView } from './views/profileView.js';
+import { ProfileController } from './controllers/profileController.js';
+import { AppView } from './views/appView.js';             // РОЗКОМЕНТУЄМО ПІЗНІШЕ
+import { AppController } from './controllers/appController.js'; // РОЗКОМЕНТУЄМО ПІЗНІШЕ
 
 
-// const defaultWordSet = [ /* ... ваш масив слів, якщо він потрібен тут ... */ ];
+const defaultWordSet = [ // Визначимо тут, щоб WordModel міг його отримати
+    { foreign: "Apple", translation: "Яблуко", category: "Fruits" },
+    { foreign: "Banana", translation: "Банан", category: "Fruits" },
+    { foreign: "Book", translation: "Книга", category: "Objects" },
+    { foreign: "Hello", translation: "Привіт", category: "Greetings" },
+    { foreign: "Cat", translation: "Кіт", category: "Animals" },
+    { foreign: "Dog", translation: "Собака", category: "Animals" },
+    { foreign: "Sun", translation: "Сонце", category: "Nature" },
+    { foreign: "Water", translation: "Вода", category: "Nature" },
+    { foreign: "Run", translation: "Бігти", category: "Verbs" },
+    { foreign: "Read", translation: "Читати", category: "Verbs" },
+];
 
 class App {
     constructor() {
         this.userModel = new UserModel();
-        // this.wordModel = new WordModel(defaultWordSet);
+        this.wordModel = new WordModel(defaultWordSet); // Створюємо екземпляр WordModel
         
         this.navView = new NavView();
         
@@ -36,14 +47,24 @@ class App {
             this.authView = new AuthView();
             this.authController = new AuthController(this.userModel, this.authView);
         } else if (bodyId === 'page-profile') {
-            this.protectRoute();
-            // this.profileView = new ProfileView(this.userModel.getCurrentUser()); // Передаємо дані користувача
-            // this.profileController = new ProfileController(this.userModel, this.profileView);
+            this.protectRoute(); 
+            if (this.userModel.isLoggedIn()) { 
+                this.profileView = new ProfileView();
+                this.profileController = new ProfileController(this.userModel, this.profileView);
+            }
         } else if (bodyId === 'page-app') {
             this.protectRoute();
-            // this.appView = new AppView();
-            // this.appController = new AppController(this.wordModel, this.appView);
+            if (this.userModel.isLoggedIn()) {
+                this.appView = new AppView(); // Створюємо AppView
+                // Передаємо WordModel та AppView до AppController.
+                // UserModel може бути потрібен, якщо AppController буде зберігати прогрес слів для користувача.
+                this.appController = new AppController(this.wordModel, this.appView /*, this.userModel */); 
+            }
         }
+        // Можна додати обробку для page-index, якщо там потрібен якийсь динамічний контент
+        // else if (bodyId === 'page-index') {
+        //     // ...
+        // }
     }
 
     handleLogout() {
