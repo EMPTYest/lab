@@ -17,18 +17,15 @@ export class AppView {
             this.learnStatsEl = this.learnSection.querySelector('div[style*="text-align: center"] p');
         }
 
-
         // Елементи для режиму контролю
         this.testSection = this.appPage.querySelector('.app-section:nth-child(2)');
         if (this.testSection) {
-            this.testForeignWordDisplayEl = this.testSection.querySelector('p.foreign-word'); // Батьківський <p>
-            this.testForeignWordStrongEl = this.testSection.querySelector('.foreign-word strong'); // Сам <strong>
+            this.testForeignWordDisplayP = this.testSection.querySelector('p.foreign-word'); // Весь параграф
             this.testUserInputEl = this.testSection.querySelector('#user-translation');
             this.checkBtn = this.testSection.querySelector('button:nth-of-type(1)');
             this.skipBtn = this.testSection.querySelector('button:nth-of-type(2)');
             this.feedbackAreaEl = this.testSection.querySelector('#feedback-area p');
             this.progressBarEl = this.testSection.querySelector('.progress-bar');
-            this.testProgressTextEl = this.testSection.querySelector('p:first-of-type'); // "Прогрес тесту:"
         }
     }
 
@@ -55,31 +52,24 @@ export class AppView {
         }
     }
 
-    bindShowLearnTranslation(handler) {
-        if (this.showTranslationBtn) this.showTranslationBtn.addEventListener('click', handler);
-    }
-    bindKnowLearnWord(handler) {
-        if (this.knowBtn) this.knowBtn.addEventListener('click', handler);
-    }
-    bindDontKnowLearnWord(handler) {
-        if (this.dontKnowBtn) this.dontKnowBtn.addEventListener('click', handler);
-    }
+    bindShowLearnTranslation(handler) { if (this.showTranslationBtn) this.showTranslationBtn.addEventListener('click', handler); }
+    bindKnowLearnWord(handler) { if (this.knowBtn) this.knowBtn.addEventListener('click', handler); }
+    bindDontKnowLearnWord(handler) { if (this.dontKnowBtn) this.dontKnowBtn.addEventListener('click', handler); }
 
     // --- Методи для режиму тестування ---
-    displayTestWord(data) {
-        if (!this.testForeignWordStrongEl || !this.testUserInputEl) return;
-        if (data.testCompleted) {
-            // Це буде оброблятися в displayTestCompleted
+    displayTestWord(data) { // data = { word: "SomeWord", testCompleted: false }
+        if (!this.testForeignWordDisplayP || !this.testUserInputEl) return;
+        
+        if (data.testCompleted) { // Це обробляється в displayTestCompleted
             return;
         }
         
-        if (this.testForeignWordDisplayEl) this.testForeignWordDisplayEl.innerHTML = `Перекладіть: <strong>${data.word}</strong>`;
+        this.testForeignWordDisplayP.innerHTML = `Перекладіть: <strong>${data.word}</strong>`;
         
-        if (this.testUserInputEl) {
-            this.testUserInputEl.value = '';
-            this.testUserInputEl.disabled = false;
-            this.testUserInputEl.focus();
-        }
+        this.testUserInputEl.value = '';
+        this.testUserInputEl.disabled = false;
+        this.testUserInputEl.focus();
+        
         if (this.checkBtn) this.checkBtn.disabled = false;
         if (this.skipBtn) this.skipBtn.disabled = false;
         if (this.feedbackAreaEl) {
@@ -88,9 +78,7 @@ export class AppView {
         }
     }
 
-    getTestAnswer() {
-        return this.testUserInputEl ? this.testUserInputEl.value : '';
-    }
+    getTestAnswer() { return this.testUserInputEl ? this.testUserInputEl.value : ''; }
 
     displayTestFeedback({ isCorrect, correctAnswer }) {
         if (!this.feedbackAreaEl) return;
@@ -105,25 +93,19 @@ export class AppView {
     
     updateTestProgressBar(progressPercentage) {
         if (!this.progressBarEl) return;
-        this.progressBarEl.style.width = `${progressPercentage}%`;
-        this.progressBarEl.textContent = `${Math.round(progressPercentage)}%`;
+        const progress = Math.round(Math.min(progressPercentage, 100));
+        this.progressBarEl.style.width = `${progress}%`;
+        this.progressBarEl.textContent = `${progress}%`;
     }
 
-    displayTestCompleted(result) {
-        if(this.testForeignWordDisplayEl) this.testForeignWordDisplayEl.textContent = "Тест завершено!";
+    displayTestCompleted(result) { // data = { correct: X, total: Y }
+        if(this.testForeignWordDisplayP) this.testForeignWordDisplayP.textContent = "Тест завершено!";
         if(this.testUserInputEl) this.testUserInputEl.disabled = true;
         if(this.checkBtn) this.checkBtn.disabled = true;
         if(this.skipBtn) this.skipBtn.disabled = true;
         if(this.feedbackAreaEl) this.feedbackAreaEl.textContent = `Результат: ${result.correct} з ${result.total} правильних.`;
-        if(this.testProgressTextEl && this.testProgressTextEl.parentElement.lastChild === this.progressBarEl.parentElement) {
-             // Не ховаємо прогрес-бар, просто оновлюємо текст
-        }
     }
 
-    bindCheckTestAnswer(handler) {
-        if (this.checkBtn) this.checkBtn.addEventListener('click', () => handler(this.getTestAnswer()));
-    }
-    bindSkipTestWord(handler) {
-        if (this.skipBtn) this.skipBtn.addEventListener('click', handler);
-    }
+    bindCheckTestAnswer(handler) { if (this.checkBtn) this.checkBtn.addEventListener('click', () => handler(this.getTestAnswer())); }
+    bindSkipTestWord(handler) { if (this.skipBtn) this.skipBtn.addEventListener('click', handler); }
 }

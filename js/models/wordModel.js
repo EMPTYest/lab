@@ -1,56 +1,58 @@
 export class WordModel {
     constructor(defaultWords = []) {
-        this.defaultWords = [...defaultWords]; // Оригінальний набір слів
+        this.defaultWords = [...defaultWords];
         
-        // Для режиму вивчення
         this.wordsToLearn = [];
         this.currentLearnIndex = 0;
         this.isLearnTranslationShown = false;
 
-        // Для режиму тестування
         this.testWords = [];
         this.currentTestIndex = 0;
         this.correctTestAnswers = 0;
+        this.totalTestQuestions = 0; // Додаємо
 
-        // Колбеки для сповіщення View про зміни
         this.onLearnWordChangedCallbacks = [];
         this.onTestWordChangedCallbacks = [];
         this.onTestFeedbackCallbacks = [];
-        this.onTestProgressCallbacks = []; // Для прогрес-бару
+        this.onTestProgressCallbacks = [];
         this.onTestCompletedCallbacks = [];
     }
 
-    // --- Методи підписки ---
+    // --- Методи підписки (залишаються без змін з попередньої версії MVC) ---
     subscribeLearnWordChange(callback) { this.onLearnWordChangedCallbacks.push(callback); }
     subscribeTestWordChange(callback) { this.onTestWordChangedCallbacks.push(callback); }
     subscribeTestFeedback(callback) { this.onTestFeedbackCallbacks.push(callback); }
     subscribeTestProgress(callback) { this.onTestProgressCallbacks.push(callback); }
     subscribeTestCompleted(callback) { this.onTestCompletedCallbacks.push(callback); }
 
+    // --- Методи сповіщення (залишаються без змін, можливо з невеликими корекціями даних) ---
     _notifyLearnWordChange() {
         const data = this.getCurrentLearnWordData();
         this.onLearnWordChangedCallbacks.forEach(cb => cb(data));
     }
-    _notifyTestWordChange() {
-        const data = this.getCurrentTestWordData();
-        this.onTestWordChangedCallbacks.forEach(cb => cb(data));
+    _notifyTestWordChange() { // Для показу наступного слова або завершення
+        if (this.currentTestIndex >= this.testWords.length) {
+            this._notifyTestCompleted();
+        } else {
+            const data = this.getCurrentTestWordData();
+            this.onTestWordChangedCallbacks.forEach(cb => cb(data));
+        }
         this._notifyTestProgress();
     }
     _notifyTestFeedback(isCorrect, correctAnswer = '') {
         this.onTestFeedbackCallbacks.forEach(cb => cb({ isCorrect, correctAnswer }));
     }
     _notifyTestProgress() {
-        const progress = this.testWords.length > 0 ? (this.currentTestIndex / this.testWords.length) * 100 : 0;
+        const progress = this.totalTestQuestions > 0 ? (this.currentTestIndex / this.totalTestQuestions) * 100 : 0;
         this.onTestProgressCallbacks.forEach(cb => cb(Math.min(progress, 100)));
     }
     _notifyTestCompleted() {
         const result = {
             correct: this.correctTestAnswers,
-            total: this.testWords.length
+            total: this.totalTestQuestions
         };
         this.onTestCompletedCallbacks.forEach(cb => cb(result));
     }
-
 
     _shuffleArray(array) {
         let newArray = [...array];
@@ -73,11 +75,11 @@ export class WordModel {
         if (this.currentLearnIndex >= this.wordsToLearn.length) {
             return { word: null, translation: null, category: null, allLearned: true, index: this.currentLearnIndex, total: this.wordsToLearn.length, isTranslationShown: this.isLearnTranslationShown };
         }
-        const word = this.wordsToLearn[this.currentLearnIndex];
+        const wordData = this.wordsToLearn[this.currentLearnIndex];
         return {
-            word: word.foreign,
-            translation: this.isLearnTranslationShown ? word.translation : "[Переклад приховано]",
-            category: word.category,
+            word: wordData.foreign,
+            translation: this.isLearnTranslationShown ? wordData.translation : "[Переклад приховано]",
+            category: wordData.category,
             allLearned: false,
             index: this.currentLearnIndex,
             total: this.wordsToLearn.length,
@@ -92,12 +94,12 @@ export class WordModel {
         }
     }
 
-    nextLearnWord() {
+    nextLearnWord() { // Для кнопок "Знаю" та "Не знаю"
         if (this.currentLearnIndex < this.wordsToLearn.length) {
             this.currentLearnIndex++;
-            this.isLearnTranslationShown = false; // Скидаємо показ перекладу для нового слова
-            this._notifyLearnWordChange();
         }
+        this.isLearnTranslationShown = false;
+        this._notifyLearnWordChange();
     }
 
     // --- Режим тестування ---
@@ -105,19 +107,21 @@ export class WordModel {
         this.testWords = this._shuffleArray(this.defaultWords);
         this.currentTestIndex = 0;
         this.correctTestAnswers = 0;
-        this._notifyTestWordChange();
+        this.totalTestQuestions = this.testWords.length;
+        this._notifyTestWordChange(); // Повідомити про перше слово
+        this._notifyTestProgress();  // Повідомити початковий прогрес (0%)
     }
 
     getCurrentTestWordData() {
         if (this.currentTestIndex >= this.testWords.length) {
-            return { word: null, testCompleted: true, index: this.currentTestIndex, total: this.testWords.length };
+            return { word: null, testCompleted: true };
         }
-        const word = this.testWords[this.currentTestIndex];
-        return { word: word.foreign, testCompleted: false, index: this.currentTestIndex, total: this.testWords.length };
+        const wordData = this.testWords[this.currentTestIndex];
+        return { word: wordData.foreign, testCompleted: false };
     }
 
     submitTestAnswer(userAnswer) {
-        if (this.currentTestIndex >= this.testWords.length) return;
+        if (this.currentTestIndex >= this.testWords.length) return {isCorrect: false, shouldContinue: false};
 
         const currentWord = this.testWords[this.currentTestIndex];
         const isCorrect = userAnswer.trim().toLowerCase() === currentWord.translation.toLowerCase();
@@ -128,23 +132,16 @@ export class WordModel {
         this._notifyTestFeedback(isCorrect, currentWord.translation);
         
         this.currentTestIndex++;
-        
-        if (this.currentTestIndex >= this.testWords.length) {
-            this._notifyTestCompleted(); // Сповіщаємо про завершення тесту
-        }
-        // _notifyTestWordChange() буде викликано з наступного setTimeout в контролері,
-        // щоб дати час на відображення фідбеку
+        // Не викликаємо _notifyTestWordChange тут, це зробить контролер після таймауту
+        return {isCorrect, shouldContinue: this.currentTestIndex < this.testWords.length};
     }
 
     skipTestWord() {
-        if (this.currentTestIndex >= this.testWords.length) return;
+        if (this.currentTestIndex >= this.testWords.length) return {shouldContinue: false};
         const currentWord = this.testWords[this.currentTestIndex];
-        this._notifyTestFeedback(false, currentWord.translation); // Позначаємо як неправильну відповідь при пропуску
+        this._notifyTestFeedback(false, currentWord.translation);
         
         this.currentTestIndex++;
-
-        if (this.currentTestIndex >= this.testWords.length) {
-            this._notifyTestCompleted();
-        }
+        return {shouldContinue: this.currentTestIndex < this.testWords.length};
     }
 }
