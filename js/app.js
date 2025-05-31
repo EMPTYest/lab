@@ -50,10 +50,16 @@ class App {
                 this.profileController = new ProfileController(this.userModel, this.profileView);
             }
         } else if (bodyId === 'page-app') {
+             console.log("APP.JS: Initializing App Page modules..."); // ЛОГ
             this.protectRoute();
             if (this.userModel.isLoggedIn()) {
-                this.appView = new AppView(); 
-                this.appController = new AppController(this.wordModel, this.appView); 
+                console.log("APP.JS: User is logged in, creating AppView and AppController."); // ЛОГ
+                this.appView = new AppView();
+                console.log("APP.JS: AppView instance:", this.appView); // ЛОГ - чи не null?
+                this.appController = new AppController(this.wordModel, this.appView);
+                console.log("APP.JS: AppController instance:", this.appController); // ЛОГ - чи не null?
+            } else {
+                console.log("APP.JS: User is NOT logged in for app page (should have been redirected).");
             }
         }
     }
