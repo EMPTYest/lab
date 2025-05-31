@@ -5,27 +5,35 @@
     <title>Реєстрація - Language Learner</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="page-register">
     <header>
         <div class="container">
             <div id="branding">
                 <h1><span class="highlight">Language</span> Learner</h1>
             </div>
             <nav>
-                <ul>
-                    <li><a href="index.html">Про додаток</a></li>
-                    <li><a href="app.html">Додаток</a></li>
-                    <li><a href="profile.html">Профіль</a></li>
-                    <li><a href="login.html">Вхід</a></li>
-                    <li class="current"><a href="register.html">Реєстрація</a></li>
-                </ul>
-            </nav>
+    <ul>
+        <li><a href="index.html">Про додаток</a></li>
+        <li><a href="app.html">Додаток</a></li>
+        
+        
+        <span id="nav-loggedIn" style="display:none;">
+            <li><a href="profile.html">Профіль</a></li>
+            <li><a href="#" id="logout-link">Вихід</a></li>
+        </span>
+
+        <span id="nav-loggedOut" style="display:none;">
+            <li><a href="login.html">Вхід</a></li>
+            <li><a href="register.html">Реєстрація</a></li>
+        </span>
+    </ul>
+</nav>
         </div>
     </header>
 
     <main class="container">
         <h1 class="page-title">Реєстрація користувача</h1>
-        <form action="#" method="POST"> 
+        <form action="#" method="POST"> <!-- Action will be handled by backend later -->
             <div class="form-group">
                 <label for="name">Ім’я:</label>
                 <input type="text" id="name" name="name" required>
@@ -54,6 +62,7 @@
                 <label for="confirm_password">Підтвердіть пароль:</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
             </div>
+            <p class="error-message" id="register-error" style="color: red; text-align: center;"></p>
             <button type="submit">Зареєструватися</button>
         </form>
     </main>
@@ -61,5 +70,6 @@
     <footer>
         <p>Language Learner © 2023</p>
     </footer>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>

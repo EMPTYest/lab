@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -6,28 +6,37 @@
     <title>Профіль користувача - Language Learner</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body  id="page-profile">
     <header>
         <div class="container">
             <div id="branding">
                 <h1><span class="highlight">Language</span> Learner</h1>
             </div>
             <nav>
-                <ul>
-                    <li><a href="index.html">Про додаток</a></li>
-                    <li><a href="app.html">Додаток</a></li>
-                    <li class="current"><a href="profile.html">Профіль</a></li>
-                    <li><a href="login.html">Вхід</a> </li>
-                    <li><a href="register.html">Реєстрація</a></li>
-                </ul>
-            </nav>
+    <ul>
+        <li><a href="index.html">Про додаток</a></li>
+        <li><a href="app.html">Додаток</a></li>
+        
+        
+        <span id="nav-loggedIn" style="display:none;">
+            <li><a href="profile.html">Профіль</a></li>
+            <li><a href="#" id="logout-link">Вихід</a></li>
+        </span>
+
+        <span id="nav-loggedOut" style="display:none;">
+            <li><a href="login.html">Вхід</a></li>
+            <li><a href="register.html">Реєстрація</a></li>
+        </span>
+    </ul>
+</nav>
         </div>
     </header>
 
     <main class="container">
         <h1 class="page-title">Профіль користувача</h1>
         
-       
+        <!-- Image placeholder for profile photo removed -->
+
         <table class="profile-table">
             <tr>
                 <td>Ім’я:</td>
@@ -67,5 +76,6 @@
     <footer>
         <p>Language Learner © 2023</p>
     </footer>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
