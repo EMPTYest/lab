@@ -8,13 +8,13 @@ export class AppView {
         }
         console.log("AppView: #page-app element FOUND.");
 
-        // Знаходимо всі секції з класом .app-section
+
         const allAppSections = this.appPage.querySelectorAll('.app-section');
-        console.log("AppView: Found allAppSections count:", allAppSections.length); // ЛОГ: Скільки секцій знайдено
+        console.log("AppView: Found allAppSections count:", allAppSections.length); 
 
         if (allAppSections.length >= 1) {
-            this.learnSection = allAppSections[0]; // Перша секція для вивчення
-            console.log("AppView: learnSection (allAppSections[0]):", this.learnSection); // ЛОГ
+            this.learnSection = allAppSections[0];
+            console.log("AppView: learnSection (allAppSections[0]):", this.learnSection); 
             if (this.learnSection) {
                 this.learnForeignWordEl = this.learnSection.querySelector('.foreign-word');
                 this.learnTranslationEl = this.learnSection.querySelector('.translation');
@@ -27,17 +27,17 @@ export class AppView {
                 console.error("AppView: learnSection (allAppSections[0]) is unexpectedly null or undefined even if allAppSections.length >= 1");
             }
         } else {
-            this.learnSection = null; // Явно встановлюємо в null, якщо не знайдено
+            this.learnSection = null; 
             console.error("AppView: No .app-section found for learnSection.");
         }
 
 
         if (allAppSections.length >= 2) {
-            this.testSection = allAppSections[1]; // Друга секція для тестування
-            console.log("AppView: testSection (allAppSections[1]):", this.testSection); // ЛОГ
+            this.testSection = allAppSections[1]; 
+            console.log("AppView: testSection (allAppSections[1]):", this.testSection); 
             if (this.testSection) {
                 this.testForeignWordDisplayP = this.testSection.querySelector('p.foreign-word');
-                this.testForeignWordStrongEl = this.testSection.querySelector('.foreign-word strong'); // Додано для перевірки
+                this.testForeignWordStrongEl = this.testSection.querySelector('.foreign-word strong'); 
                 this.testUserInputEl = this.testSection.querySelector('#user-translation');
                 this.checkBtn = this.testSection.querySelector('button:nth-of-type(1)');
                 this.skipBtn = this.testSection.querySelector('button:nth-of-type(2)');
@@ -49,7 +49,7 @@ export class AppView {
                 console.error("AppView: testSection (allAppSections[1]) is unexpectedly null or undefined even if allAppSections.length >= 2");
             }
         } else {
-            this.testSection = null; // Явно встановлюємо в null, якщо не знайдено
+            this.testSection = null; 
             console.error("AppView: Less than 2 .app-section found, testSection will be null.");
         }
     }
@@ -82,10 +82,10 @@ export class AppView {
     bindDontKnowLearnWord(handler) { if (this.dontKnowBtn) this.dontKnowBtn.addEventListener('click', handler); }
 
     // --- Методи для режиму тестування ---
-    displayTestWord(data) { // data = { word: "SomeWord", testCompleted: false }
+    displayTestWord(data) { 
         if (!this.testForeignWordDisplayP || !this.testUserInputEl) return;
         
-        if (data.testCompleted) { // Це обробляється в displayTestCompleted
+        if (data.testCompleted) { 
             return;
         }
         
@@ -123,7 +123,7 @@ export class AppView {
         this.progressBarEl.textContent = `${progress}%`;
     }
 
-    displayTestCompleted(result) { // data = { correct: X, total: Y }
+    displayTestCompleted(result) { 
         if(this.testForeignWordDisplayP) this.testForeignWordDisplayP.textContent = "Тест завершено!";
         if(this.testUserInputEl) this.testUserInputEl.disabled = true;
         if(this.checkBtn) this.checkBtn.disabled = true;

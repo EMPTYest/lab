@@ -3,7 +3,7 @@ export class NavView {
         this.navLoggedIn = document.getElementById('nav-loggedIn');
         this.navLoggedOut = document.getElementById('nav-loggedOut');
         this.logoutLink = document.getElementById('logout-link');
-        this.allNavLi = document.querySelectorAll('header nav ul li'); // Для .current
+        this.allNavLi = document.querySelectorAll('header nav ul li'); 
     }
 
     updateNav(isLoggedIn) {
@@ -11,7 +11,7 @@ export class NavView {
             this.navLoggedIn.style.display = isLoggedIn ? 'contents' : 'none';
             this.navLoggedOut.style.display = isLoggedIn ? 'none' : 'contents';
         }
-        this.setCurrentPageClass(); // Оновлюємо клас .current при зміні статусу логіну
+        this.setCurrentPageClass(); 
     }
 
     bindLogout(handler) {
@@ -28,13 +28,13 @@ export class NavView {
         this.allNavLi.forEach(li => li.classList.remove('current'));
 
         let activeLink;
-        if (this.navLoggedIn.style.display !== 'none') { // Шукаємо в видимій частині
+        if (this.navLoggedIn.style.display !== 'none') { 
             activeLink = this.navLoggedIn.querySelector(`a[href="${currentPageFile}"]`);
         }
-        if (!activeLink && this.navLoggedOut.style.display !== 'none') { // Шукаємо в іншій видимій частині
+        if (!activeLink && this.navLoggedOut.style.display !== 'none') { 
             activeLink = this.navLoggedOut.querySelector(`a[href="${currentPageFile}"]`);
         }
-        // Для загальних посилань, які не в navLoggedIn/navLoggedOut (якщо такі є)
+      
         if (!activeLink) {
              activeLink = document.querySelector(`header nav ul > li > a[href="${currentPageFile}"]`);
         }

@@ -9,7 +9,7 @@ export class WordModel {
         this.testWords = [];
         this.currentTestIndex = 0;
         this.correctTestAnswers = 0;
-        this.totalTestQuestions = 0; // Додаємо
+        this.totalTestQuestions = 0; 
 
         this.onLearnWordChangedCallbacks = [];
         this.onTestWordChangedCallbacks = [];
@@ -18,19 +18,19 @@ export class WordModel {
         this.onTestCompletedCallbacks = [];
     }
 
-    // --- Методи підписки (залишаються без змін з попередньої версії MVC) ---
+
     subscribeLearnWordChange(callback) { this.onLearnWordChangedCallbacks.push(callback); }
     subscribeTestWordChange(callback) { this.onTestWordChangedCallbacks.push(callback); }
     subscribeTestFeedback(callback) { this.onTestFeedbackCallbacks.push(callback); }
     subscribeTestProgress(callback) { this.onTestProgressCallbacks.push(callback); }
     subscribeTestCompleted(callback) { this.onTestCompletedCallbacks.push(callback); }
 
-    // --- Методи сповіщення (залишаються без змін, можливо з невеликими корекціями даних) ---
+
     _notifyLearnWordChange() {
         const data = this.getCurrentLearnWordData();
         this.onLearnWordChangedCallbacks.forEach(cb => cb(data));
     }
-    _notifyTestWordChange() { // Для показу наступного слова або завершення
+    _notifyTestWordChange() { 
         if (this.currentTestIndex >= this.testWords.length) {
             this._notifyTestCompleted();
         } else {
@@ -94,7 +94,7 @@ export class WordModel {
         }
     }
 
-    nextLearnWord() { // Для кнопок "Знаю" та "Не знаю"
+    nextLearnWord() { 
         if (this.currentLearnIndex < this.wordsToLearn.length) {
             this.currentLearnIndex++;
         }
@@ -108,8 +108,8 @@ export class WordModel {
         this.currentTestIndex = 0;
         this.correctTestAnswers = 0;
         this.totalTestQuestions = this.testWords.length;
-        this._notifyTestWordChange(); // Повідомити про перше слово
-        this._notifyTestProgress();  // Повідомити початковий прогрес (0%)
+        this._notifyTestWordChange(); 
+        this._notifyTestProgress();  
     }
 
     getCurrentTestWordData() {
@@ -132,7 +132,7 @@ export class WordModel {
         this._notifyTestFeedback(isCorrect, currentWord.translation);
         
         this.currentTestIndex++;
-        // Не викликаємо _notifyTestWordChange тут, це зробить контролер після таймауту
+
         return {isCorrect, shouldContinue: this.currentTestIndex < this.testWords.length};
     }
 

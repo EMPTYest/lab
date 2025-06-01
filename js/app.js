@@ -1,12 +1,12 @@
 import { UserModel } from './models/userModel.js';
-import { WordModel } from './models/wordModel.js'; // РОЗКОМЕНТУВАТИ
+import { WordModel } from './models/wordModel.js'; 
 import { NavView } from './views/navView.js';
 import { AuthView } from './views/authView.js';
 import { AuthController } from './controllers/authController.js';
 import { ProfileView } from './views/profileView.js';
 import { ProfileController } from './controllers/profileController.js';
-import { AppView } from './views/appView.js';             // РОЗКОМЕНТУВАТИ
-import { AppController } from './controllers/appController.js'; // РОЗКОМЕНТУВАТИ
+import { AppView } from './views/appView.js';             
+import { AppController } from './controllers/appController.js'; 
 
 
 const defaultWordSet = [
@@ -25,7 +25,7 @@ const defaultWordSet = [
 class App {
     constructor() {
         this.userModel = new UserModel();
-        this.wordModel = new WordModel(defaultWordSet); // Створюємо екземпляр WordModel
+        this.wordModel = new WordModel(defaultWordSet); 
         
         this.navView = new NavView();
         

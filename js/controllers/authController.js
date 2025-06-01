@@ -3,7 +3,7 @@ export class AuthController {
         this.userModel = userModel;
         this.authView = authView;
 
-        // Прив'язка обробників з View до методів контролера
+
         if (this.authView.registerForm) {
             this.authView.bindRegister(this.handleRegister.bind(this));
         }
@@ -39,9 +39,8 @@ export class AuthController {
         const result = this.userModel.authenticateUser(formData.email, formData.password);
 
         if (result.success) {
-            // Сповіщення про успішний вхід вже обробляється в UserModel через setCurrentUserEmail,
-            // і App.js підписаний на ці зміни для оновлення NavView та перенаправлення.
-            window.location.href = 'profile.html'; // Або app.html
+
+            window.location.href = 'profile.html'; 
         } else {
             this.authView.displayLoginError(result.message);
         }

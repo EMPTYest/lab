@@ -5,7 +5,7 @@ export class UserModel {
         this.onAuthChangedCallbacks = [];
     }
 
-    // Система підписки на подію зміни статусу аутентифікації
+   
     subscribeAuthChange(callback) {
         this.onAuthChangedCallbacks.push(callback);
     }
@@ -15,7 +15,7 @@ export class UserModel {
     }
 
     getUsers() {
-        return [...this._users]; // Повертаємо копію
+        return [...this._users]; 
     }
 
     _saveUsers() {
@@ -35,7 +35,6 @@ export class UserModel {
         } else {
             localStorage.removeItem('currentUserEmail');
         }
-        // Сповіщаємо, тільки якщо статус дійсно змінився
         if (previousLoginState !== this.isLoggedIn()) {
             this._notifyAuthChange();
         }
@@ -57,9 +56,9 @@ export class UserModel {
             email: userData.email.toLowerCase(),
             gender: userData.gender,
             dob: userData.dob,
-            password: userData.password, // ПАРОЛЬ ВІДКРИТИЙ! НЕБЕЗПЕЧНО!
+            password: userData.password, 
             registrationDate: new Date().toISOString().split('T')[0],
-            learnedWords: [] // Для майбутнього
+            learnedWords: [] 
         };
         this._users.push(newUser);
         this._saveUsers();
